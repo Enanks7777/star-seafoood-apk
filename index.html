@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAR SEAFOOD — Brebes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        :root {
+            --biru-muda: #87CEEB;
+            --biru-terang: #00BFFF;
+            --biru-dalam: #0077B6;
+            --biru-gelap: #023E8A;
+            --merah-kepiting: #E63946;
+            --kuning-bintang: #FFD60A;
+            --putih: #FFFFFF;
+            --abu-lembut: #F0F8FF;
+        }
+
+        body {
+            background: linear-gradient(180deg, #E0F4FF 0%, #B7E0FF 100%);
+            min-height: 100vh;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(180deg, var(--biru-terang) 0%, var(--biru-dalam) 100%);
+            padding: 12px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            height: 70px;
+            width: auto;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--kuning-bintang);
+        }
+
+        .menu-btn {
+            display: none;
+            font-size: 28px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .hero {
+            background: linear-gradient(180deg, rgba(135,206,235,0.85) 0%, rgba(0,119,182,0.9) 100%),
+                        url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200');
+            background-size: cover;
+            background-position: center;
+            padding: 80px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-logo {
+            width: 220px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin: 20px 0 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .tagline-box {
+            background: rgba(255,255,255,0.2);
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 12px;
+            border: 2px solid var(--kuning-bintang);
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--merah-kepiting);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            background: #C1121F;
+            transform: translateY(-3px);
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 34px;
+            color: var(--biru-gelap);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background: var(--merah-kepiting);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .halal-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            border: 2px solid var(--biru-dalam);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: var(--biru-gelap);
+        }
+
+        .menu-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 20px rgba(0,119,182,0.12);
+            border-top: 4px solid var(--biru-terang);
+        }
+
+        .menu-card h3 {
+            color: var(--merah-kepiting);
+            font-size: 24px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 15px 25px;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed #ccc;
+        }
+
+        .menu-name {
+            font-weight: 500;
+        }
+
+        .menu-price {
+            font-weight: bold;
+            color: var(--merah-kepiting);
+        }
+
+        .paket-box {
+            background: var(--abu-lembut);
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 18px;
+            border-left: 4px solid var(--biru-dalam);
+        }
+
+        .paket-box h4 {
+            font-size: 18px;
+            color: var(--biru-gelap);
+            margin-bottom: 8px;
+        }
+
+        .paket-harga {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--merah-kepiting);
+            margin-bottom: 12px;
+        }
+
+        .paket-list {
+            list-style: none;
+        }
+
+        .paket-list li {
+            padding: 4px 0;
+            font-size: 15px;
+        }
+
+        .kontak-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .kontak-box {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0,119,182,0.12);
+        }
+
+        .kontak-box h3 {
+            color: var(--biru-dalam);
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .kontak-box p {
+            margin: 8px 0;
+            font-size: 16px;
+        }
+
+        .kontak-box strong {
+            color: var(--biru-gelap);
+        }
+
+        footer {
+            background: var(--biru-gelap);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 6px 0;
+        }
+
+        .footer-logo {
+            width: 140px;
+            height: auto;
+            margin: 0 auto 15px;
+        }
+
+        .wa-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+            z-index: 998;
+            text-decoration: none;
+        }
+
+        @media(max-width:768px) {
+            .menu-btn { display: block; }
+            nav {
+                display: none;
+                position: absolute;
+                top: 65px;
+                left: 0;
+                right: 0;
+                background: var(--biru-gelap);
+                flex-direction: column;
+                padding: 20px;
+            }
+            nav.active { display: flex; }
+            nav a { display: block; margin: 10px 0; }
+            .kontak-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container header-inner">
+        <div class="logo-wrap">
+            <img src="logo-star-seafood.svg" alt="STAR Seafood" class="logo-img">
+        </div>
+
+        <div class="menu-btn" onclick="toggleMenu()">&#9776;</div>
+        <nav id="mainNav">
+            <a href="#beranda">Beranda</a>
+            <a href="#pesanan">Nasi Dus</a>
+            <a href="#menu">Menu</a>
+            <a href="#bancakan">Bancakan</a>
+            <a href="#portable">Portable</a>
+            <a href="#kontak">Kontak</a>
+        </nav>
+    </div>
+</header>
+
+<section class="hero" id="beranda">
+    <div class="container">
+        <img src="logo-star-seafood.svg" alt="STAR Seafood" class="hero-logo">
+        <h1>STAR SEAFOOD — Brebes</h1>
+        <p>🍤 Makanan adalah simbol dari cinta ketika kata-kata tak cukup mengungkapkan</p>
+
+        <div class="tagline-box">
+            📦 Menerima Pesanan Nasi Dus
+        </div>
+
+        <br>
+        <a href="#menu" class="btn">📋 Lihat Menu & Harga</a>
+    </div>
+</section>
+
+<section id="pesanan">
+    <div class="container">
+        <h2 class="section-title">📦 Menerima Pesanan Nasi Dus</h2>
+        <div style="background:white;padding:40px;border-radius:16px;text-align:center;box-shadow:0 6px 20px rgba(0,119,182,0.12);">
+            <div style="font-size:22px;line-height:1.8;color:#333;max-width:700px;margin:0 auto;">
+                <p style="font-size:26px;font-weight:bold;color:var(--biru-dalam);margin-bottom:20px;">🥡 Pesanan Nasi Dus untuk Segala Acara</p>
+                <p>✅ Rapat & Pertemuan</p>
+                <p>✅ Syukuran & Ulang Tahun</p>
+                <p>✅ Acara Kantor & Sekolah</p>
+                <p>✅ Hajatan & Undangan</p>
+                <br>
+                <p style="background:var(--abu-lembut);padding:15px;border-radius:8px;font-weight:bold;">
+                    📞 Hubungi: <strong>0815 6568 446</strong> untuk pemesanan
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="menu">
+    <div class="container">
+        <h2 class="section-title">📋 Daftar Menu & Harga</h2>
+
+        <div class="menu-card">
+            <h3>🍱 Paket Nasi</h3>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <span class="menu-name">Paket Ayam Sayur<br><small>Nasi + Minum + Ayam + Lalapan</small></span>
+                    <span class="menu-price">27 K</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-name">Paket Ayam Kampung<br><small>Nasi + Minum + Ayam + Lalapan</small></span>
+                    <span class="menu-price">32 K</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-name">Paket Ikan Bakar/Goreng<br><small>Nasi + Minum + Ikan + Lalapan</small></span>
+                    <span class="menu-price">35 K</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-card">
+            <h3>🐟 Menu Ikan</h3>
+            <div class="menu-grid">
+                <div class="menu-item"><span class="menu-name">Ikan Bawal</span><span class="menu-price">12 K/ons</span></div>
+                <div class="menu-item"><span class="menu-name">Ikan Kakap</span><span class="menu-price">11 K/ons</span></div>
+                <div class="menu-item"><span class="menu-name">Ikan Pihi</span><span class="menu-price">11 K/ons</span></div>
+                <div class="menu-item"><span class="menu-name">Ikan Kerapu</span><span class="menu-price">11 K/ons</span></div>
+                <div class="menu-item"><span class="menu-name">Ikan Etong</span><span class="menu-price">11 K/ons</span></div>
+                <div class="menu-item"><span class="menu-name">Ikan Gurami</span><span class="menu-price">14 K/ons</span></div>
+            </div>
+        </div>
+
+        <div class="menu-card">
+            <h3>🦐 Menu Udang</h3>
+            <div class="menu-grid">
+                <div class="menu-item"><span class="menu-name">Udang Bakar Madu</span><span class="menu-price">55 K</span></div>
+                <div class="menu-item"><span class="menu-name">Udang Saos Tiram</span><span class="menu-price">50 K</span></div>
+                <div class="menu-item"><span class="menu-name">Udang Saos Padang</span><span class="menu-price">50 K</span></div>
+                <div class="menu-item"><span class="menu-name">Udang Goreng Telur Asin</span><span class="menu-price">55 K</span></div>
+                <div class="menu-item"><span class="menu-name">Udang Goreng Tepung</span><span class="menu-price">50 K</span></div>
+                <div class="menu-item"><span class="menu-name">Udang Goreng Mentega</span><span class="menu-price">55 K</span></div>
+                <div class="menu-item"><span class="menu-name">Udang Bumbu Bali</span><span class="menu-price">50 K</span></div>
+            </div>
+        </div>
+
+        <div class="menu-card">
+            <h3>🐚 Menu Kerang Simping</h3>
+            <div class="menu-grid">
+                <div class="menu-item"><span class="menu-name">Saos Asam Manis</span><span class="menu-price">40 K</span></div>
+                <div class="menu-item"><span class="menu-name">Saos Padang</span><span class="menu-price">40 K</span></div>
+                <div class="menu-item"><span class="menu-name">Saos Tiram</span><span class="menu-price">40 K</span></div>
+            </div>
+        </div>
+
+        <div class="menu-card">
+            <h3>🦑 Menu Cumi-Cumi</h3>
+            <div class="menu-grid">
+                <div class="menu-item"><span class="menu-name">Cumi Dabu-dabu</span><span class="menu-price">50 K</span></div>
+                <div class="menu-item"><span class="menu-name">Cumi Asam Manis / Padang / Tiram</span><span class="menu-price">50 K</span></div>
+                <div class="menu-item"><span class="menu-name">Cumi Tepung</span><span class="menu-price">55 K</span></div>
+                <div class="menu-item"><span class="menu-name">Cumi Tepung Telur Asin</span><span class="menu-price">55 K</span></div>
+                <div class="menu-item"><span class="menu-name">Cumi Lombok Ijo</span><span class="menu-price">50 K</span></div>
+            </div>
+        </div>
+
+        <div class="menu-card">
+            <h3>🦀 Menu Kepiting</h3>
+            <div class="menu-grid">
+                <div class="menu-item"><span class="menu-name">Kepiting Asam Manis</span><span class="menu-price">150 K</span></div>
+                <div class="menu-item"><span class="menu-name">Kepiting Saos Tiram</span><span class="menu-price">150 K</span></div>
+                <div class="menu-item"><span class="menu-name">Kepiting Saos Padang</span><span class="menu-price">150 K</span></div>
+                <div class="menu-item"><span class="menu-name">Kepiting Goreng Mentega</span><span class="menu-price">150 K</span></div>
+                <div class="menu-item"><span class="menu-name">Kepiting Lada Hitam</span><span class="menu-price">150 K</span></div>
+                <div class="menu-item"><span class="menu-name">Kepiting Bumbu Bali</span><span class="menu-price">150 K</span></div>
+                <div class="menu-item"><span class="menu-name">Kepiting Bumbu Kluwek</span><span class="menu-price">150 K</span></div>
+            </div>
+        </div>
+
+        <div class="menu-card">
+            <h3>🥬 Sayuran</h3>
+            <div class="menu-grid">
+                <div class="menu-item"><span class="menu-name">Cah Kangkung Trasi</span><span class="menu-price">10 K</span></div>
+                <div class="menu-item"><span class="menu-name">Cah Kangkung Tauco</span><span class="menu-price">10 K</span></div>
+                <div class="menu-item"><span class="menu-name">Cah Tauge</span><span class="menu-price">10 K</span></div>
+                <div class="menu-item"><span class="menu-name">Pecak Tauge</span><span class="menu-price">10 K</span></div>
+                <div class="menu-item"><span class="menu-name">Gulai Ikan</span><span class="menu-price">12 K/ons</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="bancakan" style="background:white;">
+    <div class="container">
+        <h2 class="section-title">🍲 Paket Bancakan</h2>
+
+        <div class="paket-box">
+            <h4>Paket Bancakan 2 Orang</h4>
+            <div class="paket-harga">80 K</div>
+            <ul class="paket-list">
+                <li>✅ Nasi untuk 2 orang</li>
+                <li>✅ Minum teh / Es teh untuk 2 orang</li>
+                <li>✅ Udang + Kerang Mix</li>
+            </ul>
+        </div>
+
+        <div class="paket-box">
+            <h4>Paket Bancakan 4 Orang</h4>
+            <div class="paket-harga">135 K</div>
+            <ul class="paket-list">
+                <li>✅ Nasi untuk 4 orang</li>
+                <li>✅ Minum teh / Es teh untuk 4 orang</li>
+                <li>✅ Udang + Kerang Mix</li>
+            </ul>
+        </div>
+
+        <div class="paket-box">
+            <h4>Paket Bancakan 4 Orang (Lengkap)</h4>
+            <div class="paket-harga">205 K</div>
+            <ul class="paket-list">
+                <li>✅ Nasi untuk 4 orang</li>
+                <li>✅ Minum teh / Es teh untuk 4 orang</li>
+                <li>✅ Udang + Cumi + Kerang Mix + Kepiting</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section id="portable">
+    <div class="container">
+        <h2 class="section-title">📦 Paket Portable</h2>
+
+        <div class="paket-box">
+            <h4>Paket Portable — 170 K</h4>
+            <div class="paket-list">
+                <li>✅ 2 Ikan (Bakar/Goreng/Masak) 7 ons</li>
+                <li>✅ Pilihan Udang / Cumi</li>
+                <li>✅ Nasi untuk 4 orang</li>
+                <li>✅ Cah Kangkung</li>
+                <li>✅ Lalapan + Sambal</li>
+            </div>
+        </div>
+
+        <div class="paket-box">
+            <h4>Paket Portable — 160 K</h4>
+            <div class="paket-list">
+                <li>✅ 2 Ikan (Bakar/Goreng/Masak) 7 ons</li>
+                <li>✅ Sapo Tahu</li>
+                <li>✅ Nasi untuk 4 orang</li>
+                <li>✅ Minum Teh untuk 4 orang</li>
+                <li>✅ Lalapan + Sambal + Mendoan 1 porsi</li>
+            </div>
+        </div>
+
+        <div class="paket-box">
+            <h4>Paket Portable — 210 K</h4>
+            <div class="paket-list">
+                <li>✅ 2 Ikan (Bakar/Goreng/Masak) 7 ons</li>
+                <li>✅ Udang 1 porsi + Cumi 1 porsi</li>
+                <li>✅ Nasi untuk 4 orang</li>
+                <li>✅ Cah Kangkung / Urab 1 porsi</li>
+                <li>✅ Lalapan + Sambal</li>
+            </div>
+        </div>
+
+        <div class="paket-box">
+            <h4>Paket Portable — 335 K</h4>
+            <div class="paket-list">
+                <li>✅ 2 Ikan (Bakar/Goreng/Masak) 7 ons</li>
+                <li>✅ Kepiting + Udang + Cumi masing-masing 1 porsi</li>
+                <li>✅ Cah Kangkung / Urab 1 porsi</li>
+                <li>✅ Nasi untuk 4 orang</li>
+                <li>✅ Minum Teh untuk 4 orang</li>
+                <li>✅ Lalapan + Sambal</li>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="kontak" style="background:white;">
+    <div class="container">
+        <h2 class="section-title">📍 Alamat & Kontak</h2>
+        <div class="kontak-grid">
+            <div class="kontak-box">
+                <h3>🏠 Alamat Lengkap</h3>
+                <p><strong>STAR SEAFOOD</strong></p>
+                <p>Jl. KH. Hasyim Ashari No. 21</p>
+                <p>Perempatan Rajak ke Timur 250 m</p>
+                <p>Brebes — Jawa Tengah</p>
+                <br>
+                <div class="halal-badge">
+                    ☑️ BERLABEL HALAL
+                </div>
+            </div>
+            <div class="kontak-box">
+                <h3>📞 Hubungi Kami</h3>
+                <p><strong>HP / WhatsApp:</strong></p>
+                <p style="font-size:20px;font-weight:bold;color:var(--merah-kepiting);">0815 6568 446</p>
+                <br>
+                <p><strong>Telepon:</strong></p>
+                <p style="font-size:18px;font-weight:bold;">(0283) 4515 100</p>
+                <br>
+                <p style="background:var(--abu-lembut);padding:12px;border-radius:8px;">
+                    � Silakan hubungi kami untuk pemesanan Nasi Dus & Catering
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <img src="logo-star-seafood.svg" alt="STAR Seafood" class="footer-logo">
+        <p>Jl. KH. Hasyim Ashari No. 21, Perempatan Rajak ke Timur 250 m — Brebes</p>
+        <p>HP/WA: 0815 6568 446 | Telp: 0283 4515 100</p>
+        <p style="margin-top:15px;font-size:14px;opacity:0.8;">© 2026 STAR Seafood Brebes — Semua Hak Dilindungi | Menerima Pesanan Nasi Dus & Catering</p>
+    </div>
+</footer>
+
+<a href="https://wa.me/628156568446" target="_blank" class="wa-float">💬</a>
+
+<script>
+function toggleMenu() {
+    const nav = document.getElementById('mainNav');
+    nav.classList.toggle('active');
+}
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const target = document.querySelector(targetId);
+        if(target) {
+            window.scrollTo({
+                top: target.offsetTop - 70,
+                behavior: 'smooth'
+            });
+            document.getElementById('mainNav').classList.remove('active');
+        }
+    });
+</script>
+
+</body>
+</html>
